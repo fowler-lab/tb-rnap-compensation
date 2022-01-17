@@ -1,0 +1,32 @@
+SITEID,DESCRIPTION,ABBREVIATION,CITY,COUNTRY,COUNTRY_3_LETTER_CODE,LONG,LAT
+00,Not CRyPTIC,,,,,,
+01,Centers for Disease Control and Prevention,CDC,Atlanta,United States,USA,-84.3880,33.7490
+02,Chinese Center for Disease Control and Prevention,CCDC,Beijing,China,CHN,116.4074,39.9042
+03,Institute of Microbiology and Laboratory Medicine,IML,Gauting,Germany,DEU,11.3784,48.0697
+04,Hinduja Hospital and Foundation for Medical Research Mumbai,FMR,Mumbai,India,IND,72.8777,19.0760
+05,Universidad Peruana Cayetano Heredia,,Lima,Peru,PER,-77.0428,-12.0464
+06,San Raffaele Scientific Institute,,Milan,Italy,ITA,9.1900,45.4642
+07,Public Health England,PHE,Birmingham,United Kingdom,GBR,-1.898575,52.489471
+08,Oxford University Clinical Research Unit,OUCRU,Ho Chi Minh City,Vietnam,VNM,106.6297,10.8231
+09,National University Health System,,Singapore,Singapore,SGP,103.8198,1.3521
+10,"Centre for Tuberculosis, NICD",NICD,Johannesburg,South Africa,ZAF,28.0473,-26.2041
+11,Public Health Sweden,,Stockholm,Sweden,SWE,18.0686,59.3293
+12,National University of Singapore,NUS,Singapore,Singapore,SGP,103.8198,1.3521
+13,Taiwan Centers for Disease Control,,Taipei City,Taiwan,TWN,121.5654,25.0330
+14,Brazil,,Sao Paolo,Brazil,BRA,-46.6333,-23.5505
+16,TORCH,TORCH,Stellenbosch,South Africa,ZAF,18.8602,-33.9321
+17,African Health Research Institute,AHRI,Durban,South Africa,ZAF,29.8587,-31.0218
+19,"Department of Health, Wadsworth Center ",,New York,United States,USA,-74.0060,40.7128
+20,University of Capetown,,Capetown,South Africa,ZAF,18.9249,-33.9249
+21,Scottish Mycobacteria Reference Laboratory,PHS,Edinburgh,United Kingdom,GBR,-3.1883,55.9533
+23,Khon Kaen University,,Khon Kaen,Thailand,THA,102.8236,16.4322
+24,Public Health Ontario,PHO,Toronto,Canada,CAN,-79.3832,43.6532
+26,Instituto de Biomedicina de Valencia,,Valencia,Spain,ESP,-0.3763,39.4699
+27,Monash University,,Melbourne,Australia,AUS,144.9632,-37.8136
+28,Swiss Tropical and Public Health Institute,SwissTPH,Basel,Switzerland,CHE,7.5886,41.5596
+29,National Institute for Public Health and the Environment,RIVM,Bilthoven,Netherland,NLD,5.2104,52.1365
+30,Emory University,,Atlanta,United States,USA,-84.3880,33.7490
+31,ReSeqTB,ReSeqTB,,United States,USA,,
+34,National University of Singapore,NUS,,Cambodia,KHM,,
+35,St. James's Hospital Dublin,,Dublin,Ireland,IRE,-6.2603,53.3498
+ENA,Published TB short reads retrieved from the ENA,,,,,,
