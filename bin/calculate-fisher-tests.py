@@ -115,4 +115,5 @@ if __name__ == "__main__":
 
     # now convert back to a DataFrame and save to disc
     results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_right_tail','p_left_tail'])
+
     results.to_csv(options.outfile)
