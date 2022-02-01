@@ -1,15 +1,19 @@
 import argparse
 import copy
+import pkg_resources
 
 import pandas
 from fisher import pvalue
 from tqdm.autonotebook import tqdm
 
+import tb_rnap_compensation
+
 if __name__ == "__main__":
 
     # collect the command line arguments using argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--table_path", required=True, help="the path to the folder containing all the CRyPTIC tables.")
+
+    parser.add_argument("--table_path", required=False, default=pkg_resources.resource_filename("tb_rnap_compensation", 'tables/'), help="the path to the folder containing all the CRyPTIC tables.")
     parser.add_argument("--n_resistant", default=50, type=int, help="the minimum number of samples to allow in a resistant.")
     parser.add_argument("--n_other", default=50, type=int, help="the minimum number of samples to allow in an other.")
     parser.add_argument("--debug", action='store_true', help="the minimum number of samples to allow in an other.")
@@ -104,8 +108,7 @@ if __name__ == "__main__":
             fisher_test_set = pandas.crosstab(df.IS_RESISTANT, df.IS_OTHER)
             fisher_test_set = fisher_test_set.to_numpy()
 
-            # and use fisher.pvalue
-            p = pvalue(fisher_test_set[0,0],fisher_test_set[0,1],fisher_test_set[1,0],fisher_test_set[1,1])
+            p = tb_rnap_compensation.calculate_fisher_pvalue(fisher_test_set)
 
             # should be a bit faster to build a list and convert to a DataFrame once finished
             rows.append([resistant_mutation, other_mutation, p.right_tail, p.left_tail])

@@ -19,6 +19,7 @@ setup(
         'fisher',
         'tqdm'
         ],
+    packages = ['tb_rnap_compensation'],
     python_requires='>=3.8',
     zip_safe=False
     )
