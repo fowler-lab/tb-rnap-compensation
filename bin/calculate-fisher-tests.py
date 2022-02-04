@@ -16,6 +16,7 @@ if __name__ == "__main__":
     parser.add_argument("--table_path", required=False, default=pkg_resources.resource_filename("tb_rnap_compensation", 'tables/'), help="the path to the folder containing all the CRyPTIC tables.")
     parser.add_argument("--n_resistant", default=50, type=int, help="the minimum number of samples to allow in a resistant.")
     parser.add_argument("--n_other", default=50, type=int, help="the minimum number of samples to allow in an other.")
+    parser.add_argument("--syn", default=True, type=bool, help="whether to include synonymous mutations in the analysis or not.")
     parser.add_argument("--debug", action='store_true', help="the minimum number of samples to allow in an other.")
     parser.add_argument("--outfile", default='results.csv', help="the minimum number of samples to allow in an other.")
     options = parser.parse_args()
@@ -23,12 +24,17 @@ if __name__ == "__main__":
     # don't let people give you negative numbers
     assert options.n_resistant > 0, "cannot have a negative number!"
     assert options.n_other > 0, "cannot have a negative number!"
+    assert type(options.syn) == bool, "type must be a boolean!"
 
     # read in the MUTATIONS data table
     MUTATIONS = pandas.read_pickle(options.table_path + '/MUTATIONS.pkl.gz')
     MUTATIONS.reset_index(inplace=True)
     MUTATIONS = MUTATIONS.loc[(MUTATIONS.IS_FILTER_PASS) & (~MUTATIONS.IS_HET) & (~MUTATIONS.IS_NULL)]
     MUTATIONS.set_index('UNIQUEID', inplace=True)
+
+    #add column indicating synonymous mutations
+    boolean = MUTATIONS['MUTATION'].apply(lambda x: x[0]==x[-1])
+    MUTATIONS['SYNONYMOUS'] = boolean
 
     # convert GENE from categorical
     MUTATIONS = MUTATIONS.astype({'GENE':'str'})
@@ -42,6 +48,9 @@ if __name__ == "__main__":
     EFFECTS.set_index('UNIQUEID', inplace=True)
 
     RESISTANT_MUTATIONS = pandas.DataFrame(EFFECTS.GENE_MUTATION.unique(), columns = ['GENE_MUTATION'])
+
+    if options.syn!=True:
+        MUTATIONS=MUTATIONS[MUTATIONS.SYNONYMOUS==False]
 
     OTHER_MUTATIONS = pandas.DataFrame(list(set(MUTATIONS.GENE_MUTATION.unique()) - set(RESISTANT_MUTATIONS.GENE_MUTATION.unique())), columns=['GENE_MUTATION'])
     OTHER_MUTATIONS = OTHER_MUTATIONS[['GENE_MUTATION']]
