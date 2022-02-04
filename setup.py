@@ -20,6 +20,7 @@ setup(
         'tqdm'
         ],
     packages = ['tb_rnap_compensation'],
+    package_data={'': ['tables/*']},
     python_requires='>=3.8',
     zip_safe=False
     )
