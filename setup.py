@@ -6,18 +6,19 @@ with open("README.md", "r") as f:
     README = f.read()
 
 setup(
-    name='calculate-fisher-tests',
+    name='tb-rnap-compensation',
     version='0.1.0',
     description='Infer if a non-resistant mutation is associated with a resistance mutation using Fishers Exact Test',
     author='Viktoria Brunner',
     author_email='viktoria.brunner@dtc.ox.ac.uk',
     url='https://github.com/fowler-lab/tb-rnap-compensation',
-    scripts=['bin/calculate-fisher-tests.py'],
+    scripts=['bin/calculate-fisher-tests.py','bin/results-evaluation.py'],
     long_description = README,
     install_requires=[
         'pandas',
         'fisher',
-        'tqdm'
+        'tqdm',
+        'xlsxwriter'
         ],
     packages = ['tb_rnap_compensation'],
     package_data={'': ['tables/*']},
