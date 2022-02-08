@@ -37,7 +37,7 @@ if __name__ == "__main__":
         print("There were %i tests performed and the analysis looks for other mutations that are significantly correlated to resistance mutations on a %i percent level." %(n_tests, options.p_value*100))
 
     # load known CMs from reference papers
-    reference=pandas.read_excel(options.results_path + 'Ref_known_CMs.xlsx', sheet_name=sheet_name)
+    reference=pandas.read_excel(options.results_path + 'Ref_CMs.xlsx', sheet_name=sheet_name)
     reference.drop([0,1,2,3], axis=0, inplace=True)
     reference.drop(index=reference.index[-2:], axis=0, inplace=True)
 
