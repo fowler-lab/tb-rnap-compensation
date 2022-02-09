@@ -15,6 +15,7 @@ if __name__ == "__main__":
     parser.add_argument("--results_path", required=False, default='/Users/viktoriabrunner/Documents/Studium/PhD/Project1_rev/repository/tb-rnap-compensation/', help="the path to the folder containing the results.csv file from calculate-fisher-tests.py and the reference file.")
     parser.add_argument("--p_value", default=0.01, type=float, help="the cut-off for significantly associated mutations.")
     parser.add_argument("--method", default='inclusive', type=str, help="the type of reference list to be used for comparison. Either 'inclusive' or 'conservative'.")
+    parser.add_argument("--lineages", action='store_true', help="Compiles list of known lineage-defining mutations within new hits. Based on list created using SNP-IT tool from Sam Lipworth.")
     parser.add_argument("--debug", action='store_true', help="print info on running analysis to terminal.")
     options = parser.parse_args()
 
@@ -65,6 +66,16 @@ if __name__ == "__main__":
     new_hits = unique_hits[~unique_hits.isin(reference['mutation'])]
     new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_right_tail<(p_value/n_tests))]
 
+    #if lineages flagged, compile list of new hits found in lineage-defining list
+    if options.lineages:
+        lineage_mut = pandas.read_csv(options.results_path + 'lineage_MUTATIONS.csv')
+        lineage_mut['GENE_MUTATION'] = lineage_mut['GENE'] + '_' + lineage_mut['MUTATION']
+        rpo_lineages = lineage_mut[(lineage_mut.SPECIES == 'M. tuberculosis') & ((lineage_mut.GENE == 'rpoA')|(lineage_mut.GENE == 'rpoB')|(lineage_mut.GENE == 'rpoC')|(lineage_mut.GENE == 'rpoZ'))]
+        lineage_hits = new_hits[new_hits['other_mutation'].isin(rpo_lineages.GENE_MUTATION)]
+
+        rows3 = []
+        rows3 = lineage_hits
+
     # write xlsx file with metadata of analysis and significantly correlated reference and new hits
     rows = []
     rows.append([p_value, n_tests, method, found_ref, found_ref_sign])
@@ -80,4 +91,6 @@ if __name__ == "__main__":
     analysis.to_excel(writer, sheet_name='parameters_statistics', index=False)
     rows1.to_excel(writer, sheet_name='reference_hits', index=False)
     rows2.to_excel(writer, sheet_name='new_hits', index=False)
+    if options.lineages:
+        rows3.to_excel(writer, sheet_name='lineage_hits', index=False)
     writer.save()   
