@@ -14,6 +14,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--results_path", required=False, default='/Users/viktoriabrunner/Documents/Studium/PhD/Project1_rev/repository/tb-rnap-compensation/', help="the path to the folder containing the results.csv file from calculate-fisher-tests.py and the reference file.")
     parser.add_argument("--p_value", default=0.01, type=float, help="the cut-off for significantly associated mutations.")
+    parser.add_argument("--correct_p_value", action='store_true', help="whether to apply bonferroni correction of p-value or not.")
     parser.add_argument("--method", default='inclusive', type=str, help="the type of reference list to be used for comparison. Either 'inclusive' or 'conservative'.")
     parser.add_argument("--lineages", action='store_true', help="Compiles list of known lineage-defining mutations within new hits. Based on list created using SNP-IT tool from Sam Lipworth.")
     parser.add_argument("--debug", action='store_true', help="print info on running analysis to terminal.")
@@ -26,7 +27,10 @@ if __name__ == "__main__":
     results=pandas.read_csv(options.results_path + 'results.csv')
 
     # set parameters
-    p_value = options.p_value/len(results)
+    if options.correct_p_value:
+        p_value = options.p_value/len(results)
+    else:
+        p_value = options.p_value
     n_tests = len(results)
     method = options.method
     if method == 'inclusive':
@@ -45,7 +49,7 @@ if __name__ == "__main__":
     # determine which of the reference mutations appear in ALL tested other_mutations
     unique_results=pandas.Series(results['other_mutation'].unique())
 
-    # determine which other_mutations are significantly correlated with resistance mutations on a 1% level including bonferroni multiple testing correction
+    # determine which other_mutations are significantly correlated with resistance mutations on specified significance level
     hits = results[(results.p_right_tail<(p_value))].other_mutation
     unique_hits = pandas.Series(hits.unique())
 
@@ -60,11 +64,11 @@ if __name__ == "__main__":
 
     # store reference hits that are found with their corresponding resistance mutations and p-values in dataframe
     ref_hits = unique_hits[unique_hits.isin(reference['mutation'])]
-    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_right_tail<(p_value/n_tests))]
+    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_right_tail<(p_value))]
 
     # store previoulsy not described hits with their corresponding resistance mutation and p-vlaues in dataframe
     new_hits = unique_hits[~unique_hits.isin(reference['mutation'])]
-    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_right_tail<(p_value/n_tests))]
+    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_right_tail<(p_value))]
 
     #if lineages flagged, compile list of new hits found in lineage-defining list
     if options.lineages:
