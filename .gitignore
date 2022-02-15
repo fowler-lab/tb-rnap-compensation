@@ -5,7 +5,11 @@ __pycache__/
 .DS_Store
 # C extensions
 *.so
-results.csv
+results*
+Fisher_hits_analysis*
+Ref_CMs.xlsx
+lineage_MUTATIONS.csv
+*.png
 
 # Distribution / packaging
 .Python
