@@ -44,7 +44,6 @@ if __name__ == "__main__":
     # load known CMs from reference papers
     reference=pandas.read_excel(options.results_path + 'Ref_CMs.xlsx', sheet_name=sheet_name)
     reference.drop([0,1,2,3], axis=0, inplace=True)
-    reference.drop(index=reference.index[-2:], axis=0, inplace=True)
 
     # determine which of the reference mutations appear in ALL tested other_mutations
     unique_results=pandas.Series(results['other_mutation'].unique())
