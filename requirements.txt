@@ -1,3 +1,8 @@
-fisher
 pandas
-tqdm
+numpy
+
+matplotlib
+scipy
+seaborn
+
+fisher
