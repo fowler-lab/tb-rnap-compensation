@@ -121,12 +121,12 @@ if __name__ == "__main__":
             p = tb_rnap_compensation.calculate_fisher_pvalue(fisher_test_set)
 
             # should be a bit faster to build a list and convert to a DataFrame once finished
-            rows.append([resistant_mutation, other_mutation, p.right_tail, p.left_tail])
+            rows.append([resistant_mutation, other_mutation, p.right_tail, p.left_tail, fisher_test_set[0,0], fisher_test_set[0,1], fisher_test_set[1,0], fisher_test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
 
             # consider using one-sided test, here resultsGreater -> means we expect a larger odds ratio
             # print(resistant_mutation, other_mutation, oddsr, p)
 
     # now convert back to a DataFrame and save to disc
-    results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_right_tail','p_left_tail'])
+    results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_right_tail','p_left_tail','None','other','resistant','both', 'n_resistant', 'n_other'])
 
     results.to_csv(options.outfile, index=False)
