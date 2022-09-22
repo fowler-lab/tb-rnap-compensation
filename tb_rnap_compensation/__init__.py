@@ -14,3 +14,29 @@ def calculate_fisher_pvalue(array):
     p = pvalue(array[0,0],array[0,1],array[1,0],array[1,1])
 
     return(p)
+
+def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, both_obs = 8800):
+    
+    p_res = res_obs/ 64722
+    p_other = other_obs/ 64722
+    n_both_obs = (both_obs/ 64722) * N
+    
+    n_both = []
+    
+    for i in range(n):
+
+        N = N
+
+        resistant = numpy.random.choice(a = [True, False], size = N, p = [p_res, 1-p_res])
+        resistant 
+
+        other = numpy.random.choice(a = [True, False], size = N, p = [p_other, 1-p_other])
+        other
+
+        both = other[resistant]
+
+        n_both.append(both.sum())
+        
+    p_value = (numpy.array([n_both]) > n_both_obs).sum()/ n
+    
+    return p_value
