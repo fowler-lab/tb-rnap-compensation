@@ -7,3 +7,4 @@ seaborn
 
 fisher
 openpyxl
+decimal

@@ -4,6 +4,7 @@ import numpy
 
 from fisher import pvalue
 
+import decimal
 def calculate_fisher_pvalue(array):
 
     assert isinstance(array, numpy.ndarray), "have to pass a numpy array!"
@@ -28,15 +29,13 @@ def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, bot
         N = N
 
         resistant = numpy.random.choice(a = [True, False], size = N, p = [p_res, 1-p_res])
-        resistant 
 
         other = numpy.random.choice(a = [True, False], size = N, p = [p_other, 1-p_other])
-        other
 
         both = other[resistant]
 
         n_both.append(both.sum())
         
-    p_value = (numpy.array([n_both]) > n_both_obs).sum()/ n
+    p_value = decimal.Decimal((numpy.array([n_both]) > n_both_obs).sum().item())/ decimal.Decimal(n)
     
     return p_value

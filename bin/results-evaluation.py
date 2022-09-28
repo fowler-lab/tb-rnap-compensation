@@ -49,7 +49,7 @@ if __name__ == "__main__":
     unique_results=pandas.Series(results['other_mutation'].unique())
 
     # determine which other_mutations are significantly correlated with resistance mutations on specified significance level
-    hits = results[(results.p_right_tail<(p_value))].other_mutation
+    hits = results[(results.p_value<(p_value))].other_mutation
     unique_hits = pandas.Series(hits.unique())
 
     if options.debug:
@@ -63,11 +63,11 @@ if __name__ == "__main__":
 
     # store reference hits that are found with their corresponding resistance mutations and p-values in dataframe
     ref_hits = unique_hits[unique_hits.isin(reference['mutation'])]
-    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_right_tail<(p_value))]
+    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_value<(p_value))]
 
     # store previoulsy not described hits with their corresponding resistance mutation and p-vlaues in dataframe
     new_hits = unique_hits[~unique_hits.isin(reference['mutation'])]
-    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_right_tail<(p_value))]
+    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_value<(p_value))]
 
     #if lineages flagged, compile list of new hits found in lineage-defining list
     if options.lineages:
