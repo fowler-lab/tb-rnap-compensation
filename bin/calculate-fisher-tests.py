@@ -121,11 +121,14 @@ if __name__ == "__main__":
 
             #now we use one of the two methods to calculate the p-value
             if options.test_method == 'numerical':
+                
+                if test_set[1,1] > 0:
+                    p =  tb_rnap_compensation.numerical_test(1000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
 
-                p =  tb_rnap_compensation.numerical_test(1000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
+                else:
+                    p = 1
 
                 rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
-
 
             if options.test_method == 'fisher':
                 
