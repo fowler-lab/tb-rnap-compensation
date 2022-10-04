@@ -35,7 +35,13 @@ def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, bot
         both = other[resistant]
 
         n_both.append(both.sum())
-        
-    p_value = decimal.Decimal((numpy.array([n_both]) > n_both_obs).sum().item())/ decimal.Decimal(n)
+
+    if n_both_obs > 0:  
+
+        p_value = decimal.Decimal((numpy.array([n_both]) > n_both_obs).sum().item())/ decimal.Decimal(n)
     
+    else:
+
+        p_value = 1
+        
     return p_value
