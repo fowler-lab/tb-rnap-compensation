@@ -93,6 +93,7 @@ if __name__ == "__main__":
         print("There are %i samples" %(len(SAMPLES)))
 
     rows=[]
+    n_tests = 0
 
     # iterate through the non-resistant mutations first since there are more of them
     for other_mutation in tqdm(OTHER_MUTATIONS.GENE_MUTATION):
@@ -124,6 +125,7 @@ if __name__ == "__main__":
                 
                 if test_set[1,1] > 0:
                     p =  tb_rnap_compensation.numerical_test(1000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
+                    n_tests = n_tests + 1
 
                 else:
                     p = 1
@@ -135,7 +137,8 @@ if __name__ == "__main__":
                 p = tb_rnap_compensation.calculate_fisher_pvalue(test_set)
 
                 rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
-
+    
+    rows.append(['number','of tests', 'performed:',n_tests, 'use', 'this', 'for', 'bonferroni', 'correction'])
     # now convert back to a DataFrame and save to disc
     results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_value','None','other','resistant','both', 'n_resistant', 'n_other'])
 
