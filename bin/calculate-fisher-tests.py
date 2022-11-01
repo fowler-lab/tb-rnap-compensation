@@ -124,7 +124,7 @@ if __name__ == "__main__":
             if options.test_method == 'numerical':
                 
                 if test_set[1,1] > 0:
-                    p =  tb_rnap_compensation.numerical_test(1000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
+                    p =  tb_rnap_compensation.numerical_test(1000000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
                     n_tests = n_tests + 1
 
                 else:
@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
                 rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
     
-    rows.append(['number','of tests', 'performed:',n_tests, 'use', 'this', 'for', 'bonferroni', 'correction'])
+    rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9])
     # now convert back to a DataFrame and save to disc
     results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_value','None','other','resistant','both', 'n_resistant', 'n_other'])
 

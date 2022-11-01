@@ -27,11 +27,11 @@ if __name__ == "__main__":
     results=pandas.read_csv(options.results_path + 'results.csv')
 
     # set parameters
+    n_tests = float(results[(results.resistant_mutation=='number')]['None'])
     if options.correct_p_value:
-        p_value = options.p_value/len(results)
+        p_value = options.p_value/n_tests
     else:
         p_value = options.p_value
-    n_tests = len(results)
     method = options.method
     if method == 'inclusive':
         sheet_name='described_CMs_binary'
@@ -40,6 +40,10 @@ if __name__ == "__main__":
 
     if options.debug:
         print("There were %i tests performed and the analysis looks for other mutations that are significantly correlated to resistance mutations on a %i percent level." %(n_tests, options.p_value*100))
+
+    # remove last line of results as not needed for downstream analysis
+    results.drop(index = results.index[-1], axis=0, inplace=True)
+    results['p_value'] = results['p_value'].astype(float)
 
     # load known CMs from reference papers
     reference=pandas.read_excel(options.results_path + 'Ref_CMs.xlsx', sheet_name=sheet_name)
