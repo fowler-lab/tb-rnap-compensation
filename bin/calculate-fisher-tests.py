@@ -137,6 +137,12 @@ if __name__ == "__main__":
                 p = tb_rnap_compensation.calculate_fisher_pvalue(test_set)
 
                 rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+
+            if options.test_method == 'chi-square':
+
+                p = tb_rnap_compensation.calculate_chi_square_pvalue(test_set)
+
+                rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
     
     rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9])
     # now convert back to a DataFrame and save to disc

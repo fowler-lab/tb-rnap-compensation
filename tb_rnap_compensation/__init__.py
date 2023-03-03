@@ -3,6 +3,7 @@
 import numpy
 
 from fisher import pvalue
+from scipy.stats import chi2_contingency
 
 import decimal
 def calculate_fisher_pvalue(array):
@@ -15,6 +16,16 @@ def calculate_fisher_pvalue(array):
     p = pvalue(array[0,0],array[0,1],array[1,0],array[1,1])
 
     return(p)
+
+def calculate_chi_square_pvalue(array):
+
+    assert isinstance(array, numpy.ndarray), "have to pass a numpy array!"
+
+    assert array.shape == (2,2), "has to be a 2x2 array!"
+
+    result = chi2_contingency(array)
+
+    return(result.pvalue)
 
 def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, both_obs = 8800):
     
