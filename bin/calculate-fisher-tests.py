@@ -90,7 +90,7 @@ if __name__ == "__main__":
     SAMPLES.set_index('UNIQUEID', inplace=True)
 
     if options.debug:
-        print("There are %i samples" %(len(SAMPLES)))
+        print("There are %i samples with mutations in RNAP" %(len(SAMPLES)))
 
     rows=[]
     n_tests = 0
