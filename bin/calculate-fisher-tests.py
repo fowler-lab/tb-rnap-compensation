@@ -124,7 +124,7 @@ if __name__ == "__main__":
             if options.test_method == 'numerical':
                 
                 if test_set[1,1] > 0:
-                    p =  tb_rnap_compensation.numerical_test(1000000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
+                    p =  tb_rnap_compensation.numerical_test(100000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
                     n_tests = n_tests + 1
 
                 else:
