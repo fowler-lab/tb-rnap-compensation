@@ -23,9 +23,9 @@ def calculate_chi_square_pvalue(array):
 
     assert array.shape == (2,2), "has to be a 2x2 array!"
 
-    result = chi2_contingency(array)
+    stat, p, dof, expected = chi2_contingency(array)
 
-    return(result.pvalue)
+    return(p)
 
 def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, both_obs = 8800):
     
