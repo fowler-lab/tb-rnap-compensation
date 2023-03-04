@@ -138,10 +138,13 @@ if __name__ == "__main__":
                     p = tb_rnap_compensation.calculate_fisher_pvalue(test_set)
                     n_tests = n_tests + 1
 
+                    rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+
+
                 else:
                     p = 1
 
-                rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+                    rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
 
             if options.test_method == 'chi-square':
 
