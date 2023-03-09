@@ -149,16 +149,22 @@ if __name__ == "__main__":
             if options.test_method == 'chi-square':
 
                 if test_set[1,1] > 0:
-                    p = tb_rnap_compensation.calculate_chi_square_pvalue(test_set)
+                    stat, p, dof, expected = tb_rnap_compensation.calculate_chi_square_pvalue(test_set)
                     n_tests = n_tests + 1
 
                 else:
-                    p = 1
+                    stat, p, dof, expected = 1, 1, 1, 1
 
-                rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+                rows.append([resistant_mutation, other_mutation, stat, p, dof, expected, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
     
-    rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9])
-    # now convert back to a DataFrame and save to disc
-    results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_value','None','other','resistant','both', 'n_resistant', 'n_other'])
+    if options.test_method == 'chi-square':
+        rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9, 10, 11, 12])
+        # now convert back to a DataFrame and save to disc
+        results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','chi-square statistic','p_value','dof','expected','None','other','resistant','both', 'n_resistant', 'n_other'])
+
+    else:
+        rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9])
+        # now convert back to a DataFrame and save to disc
+        results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_value','None','other','resistant','both', 'n_resistant', 'n_other'])
 
     results.to_csv(options.outfile, index=False)

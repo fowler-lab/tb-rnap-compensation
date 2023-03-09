@@ -25,7 +25,7 @@ def calculate_chi_square_pvalue(array):
 
     stat, p, dof, expected = chi2_contingency(array)
 
-    return(p)
+    return(stat, p, dof, expected)
 
 def numerical_test(n = 10000, N = 10000, res_obs = 14000, other_obs = 40000, both_obs = 8800):
     
