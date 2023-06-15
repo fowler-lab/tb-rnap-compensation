@@ -11,11 +11,11 @@ We have around 70,000 sequenced M. tuberculosis genomes on hand, which can be em
 
 ## Way of working
 
-# Recreate figures
+### Recreate figures
 
 This repository is the basis for the paper "Compensatory Mutations are associated with increased in vitro Growth Levels in resistant Clinical Samples of Mycobacterium tuberculosis. Clicking "launch binder" above the readme will take you to a binder that you can use to run the jupyter notebook "Recreate_figures_paper.ipynb". This notebook allows to reproduce most of the figures as seen in the paper. A few exceptions are figures based on PyMOL mappings, which were produced outside of the notebook environment.
 
-# Run statistical association tests
+### Run statistical association tests
 
 The statistical test used (fisher test for association of resistance mutations with potential CMs) can be reproduced as well by using cloning the github repository to your local machine and using `setup.py` to install the module. The command `calculate-fisher-tests.py` should then allow to run pairwise testing of resistance mutations with other mutations detected in the RNA polymerase. It is possible to specify several parameters.
 
