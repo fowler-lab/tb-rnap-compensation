@@ -1,4 +1,4 @@
-(insert binder launcher)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fowler-lab/tb-rnap-compensation.git/HEAD)
 # tb-rnap-compensation
 Identification of compensatory mutations in rifampicin resistance in M. tuberculosis and evaluation of their influence on in vitro growth phenotypes.
 
