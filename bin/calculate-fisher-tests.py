@@ -16,6 +16,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--table_path", required=False, default=pkg_resources.resource_filename("tb_rnap_compensation", 'tables/'), help="the path to the folder containing all the CRyPTIC tables.")
+    parser.add_argument("--test_method", default='numerical', help="the statistical association test used. Options are 'numerical' or 'fisher' test.")
     parser.add_argument("--n_resistant", default=50, type=int, help="the minimum number of samples to allow in a resistant.")
     parser.add_argument("--n_other", default=50, type=int, help="the minimum number of samples to allow in an other.")
     parser.add_argument("--include_syn", action='store_true', help="whether to include synonymous mutations in the analysis or not.")
@@ -89,9 +90,10 @@ if __name__ == "__main__":
     SAMPLES.set_index('UNIQUEID', inplace=True)
 
     if options.debug:
-        print("There are %i samples" %(len(SAMPLES)))
+        print("There are %i samples with mutations in RNAP" %(len(SAMPLES)))
 
     rows=[]
+    n_tests = 0
 
     # iterate through the non-resistant mutations first since there are more of them
     for other_mutation in tqdm(OTHER_MUTATIONS.GENE_MUTATION):
@@ -100,7 +102,7 @@ if __name__ == "__main__":
         OTHER_SAMPLES['IS_OTHER'] = True
         OTHER_SAMPLES = OTHER_SAMPLES[['IS_OTHER']]
 
-        for resistant_mutation in RESISTANT_MUTATIONS.GENE_MUTATION:
+        for resistant_mutation in tqdm(RESISTANT_MUTATIONS.GENE_MUTATION):
 
             RESISTANT_SAMPLES = copy.deepcopy(EFFECTS.loc[EFFECTS.GENE_MUTATION == resistant_mutation])
             RESISTANT_SAMPLES['IS_RESISTANT'] = True
@@ -115,18 +117,54 @@ if __name__ == "__main__":
             df.fillna(False,inplace=True)
 
             # now we can do the crosstab
-            fisher_test_set = pandas.crosstab(df.IS_RESISTANT, df.IS_OTHER)
-            fisher_test_set = fisher_test_set.to_numpy()
+            test_set = pandas.crosstab(df.IS_RESISTANT, df.IS_OTHER)
+            test_set = test_set.to_numpy()
 
-            p = tb_rnap_compensation.calculate_fisher_pvalue(fisher_test_set)
+            #now we use one of the two methods to calculate the p-value
+            if options.test_method == 'numerical':
+                
+                if test_set[1,1] > 0:
+                    p =  tb_rnap_compensation.numerical_test(100000, 10000, len(RESISTANT_SAMPLES), len(OTHER_SAMPLES), test_set[1,1])
+                    n_tests = n_tests + 1
 
-            # should be a bit faster to build a list and convert to a DataFrame once finished
-            rows.append([resistant_mutation, other_mutation, p.right_tail, p.left_tail])
+                else:
+                    p = 1
 
-            # consider using one-sided test, here resultsGreater -> means we expect a larger odds ratio
-            # print(resistant_mutation, other_mutation, oddsr, p)
+                rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
 
-    # now convert back to a DataFrame and save to disc
-    results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_right_tail','p_left_tail'])
+            if options.test_method == 'fisher':
+                
+                if test_set[1,1] > 0:
+                    p = tb_rnap_compensation.calculate_fisher_pvalue(test_set)
+                    n_tests = n_tests + 1
+
+                    rows.append([resistant_mutation, other_mutation, p.right_tail, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+
+
+                else:
+                    p = 1
+
+                    rows.append([resistant_mutation, other_mutation, p, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+
+            if options.test_method == 'chi-square':
+
+                if test_set[1,1] > 0:
+                    stat, p, dof, expected = tb_rnap_compensation.calculate_chi_square_pvalue(test_set)
+                    n_tests = n_tests + 1
+
+                else:
+                    stat, p, dof, expected = 1, 1, 1, 1
+
+                rows.append([resistant_mutation, other_mutation, stat, p, dof, expected, test_set[0,0], test_set[0,1], test_set[1,0], test_set[1,1], len(RESISTANT_SAMPLES), len(OTHER_SAMPLES)])
+    
+    if options.test_method == 'chi-square':
+        rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9, 10, 11, 12])
+        # now convert back to a DataFrame and save to disc
+        results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','chi-square statistic','p_value','dof','expected','None','other','resistant','both', 'n_resistant', 'n_other'])
+
+    else:
+        rows.append(['number', 'of tests', 'performed:', n_tests, 5, 6, 7, 8, 9])
+        # now convert back to a DataFrame and save to disc
+        results = pandas.DataFrame(rows,columns=['resistant_mutation', 'other_mutation','p_value','None','other','resistant','both', 'n_resistant', 'n_other'])
 
     results.to_csv(options.outfile, index=False)

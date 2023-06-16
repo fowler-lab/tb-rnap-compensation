@@ -6,3 +6,5 @@ scipy
 seaborn
 
 fisher
+openpyxl
+decimal

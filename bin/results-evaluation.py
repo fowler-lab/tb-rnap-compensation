@@ -27,11 +27,11 @@ if __name__ == "__main__":
     results=pandas.read_csv(options.results_path + 'results.csv')
 
     # set parameters
+    n_tests = float(results[(results.resistant_mutation=='number')]['None'])
     if options.correct_p_value:
-        p_value = options.p_value/len(results)
+        p_value = options.p_value/n_tests
     else:
         p_value = options.p_value
-    n_tests = len(results)
     method = options.method
     if method == 'inclusive':
         sheet_name='described_CMs_binary'
@@ -41,15 +41,19 @@ if __name__ == "__main__":
     if options.debug:
         print("There were %i tests performed and the analysis looks for other mutations that are significantly correlated to resistance mutations on a %i percent level." %(n_tests, options.p_value*100))
 
+    # remove last line of results as not needed for downstream analysis
+    results.drop(index = results.index[-1], axis=0, inplace=True)
+    results['p_value'] = results['p_value'].astype(float)
+
     # load known CMs from reference papers
     reference=pandas.read_excel(options.results_path + 'Ref_CMs.xlsx', sheet_name=sheet_name)
-    reference.drop([0,1,2,3], axis=0, inplace=True)
+    reference.drop([0,1,2], axis=0, inplace=True)
 
     # determine which of the reference mutations appear in ALL tested other_mutations
     unique_results=pandas.Series(results['other_mutation'].unique())
 
     # determine which other_mutations are significantly correlated with resistance mutations on specified significance level
-    hits = results[(results.p_right_tail<(p_value))].other_mutation
+    hits = results[(results.p_value<(p_value))].other_mutation
     unique_hits = pandas.Series(hits.unique())
 
     if options.debug:
@@ -63,11 +67,11 @@ if __name__ == "__main__":
 
     # store reference hits that are found with their corresponding resistance mutations and p-values in dataframe
     ref_hits = unique_hits[unique_hits.isin(reference['mutation'])]
-    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_right_tail<(p_value))]
+    ref_hits = results[results['other_mutation'].isin(ref_hits)&(results.p_value<(p_value))]
 
     # store previoulsy not described hits with their corresponding resistance mutation and p-vlaues in dataframe
     new_hits = unique_hits[~unique_hits.isin(reference['mutation'])]
-    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_right_tail<(p_value))]
+    new_hits = results[results['other_mutation'].isin(new_hits)&(results.p_value<(p_value))]
 
     #if lineages flagged, compile list of new hits found in lineage-defining list
     if options.lineages:
