@@ -1,13 +1,13 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fowler-lab/tb-rnap-compensation.git/HEAD)
 # tb-rnap-compensation
-Identification of compensatory mutations in rifampicin resistance in M. tuberculosis and evaluation of their influence on in vitro growth phenotypes.
+Identification of compensatory mutations in rifampicin resistance in *M. tuberculosis* and evaluation of their influence on *in vitro* growth phenotypes.
 
 ## Idea
 
-Rifampicin resistance is introduced by mutations in the RNA polymerase of M. tuberculosis. This resistance also introduces a fitness cost in M. tuberculosis bacteria. This fitness cost can be alleviated by compensatory mutations (CMs) in other parts of the same protein. 
+Rifampicin resistance is introduced by mutations in the RNA polymerase of *M. tuberculosis*. This resistance also introduces a fitness cost in M. tuberculosis bacteria. This fitness cost can be alleviated by compensatory mutations (CMs) in other parts of the same protein. 
 The direct causal link between each resistance mutation and compensatory mutation should allow identifying a comprehensive set of compensatory mutations through statistical association testing, if conducted with a large enough dataset.
 
-We have around 70,000 sequenced M. tuberculosis genomes on hand, which can be employed to identify a high-confidence set of CMs. Pairing this with in vitro growth data (available for about 20,000 samples) allows evaluation of the genotype-phenotype relationship. 
+We have around 70,000 sequenced *M. tuberculosis* genomes on hand, which can be employed to identify a high-confidence set of CMs. Pairing this with *in vitro* growth data (available for about 15,000 samples) allows evaluation of the genotype-phenotype relationship. 
 
 ## Way of working
 
