@@ -18,7 +18,7 @@ setup(
         'pandas',
         'fisher',
         'tqdm',
-        'xlsxwriter'
+        #'xlsxwriter'
         ],
     packages = ['tb_rnap_compensation'],
     package_data={'': ['tables/*']},
