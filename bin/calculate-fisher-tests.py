@@ -61,8 +61,9 @@ if __name__ == "__main__":
     df = EFFECTS.GENE_MUTATION.value_counts()>options.n_resistant
     df = pandas.DataFrame(df[df])
     df.reset_index(inplace=True)
-    HIGH_COUNTS = df[['index']]
-    HIGH_COUNTS.rename(columns={'index': 'GENE_MUTATION'}, inplace=True)
+    # HIGH_COUNTS = df[['index']]
+    # HIGH_COUNTS.rename(columns={'index': 'GENE_MUTATION'}, inplace=True)
+    HIGH_COUNTS = df[['GENE_MUTATION']]
     HIGH_COUNTS.set_index('GENE_MUTATION', inplace=True)
     RESISTANT_MUTATIONS.set_index('GENE_MUTATION', inplace=True)
     RESISTANT_MUTATIONS = RESISTANT_MUTATIONS.join(HIGH_COUNTS, how='inner')
@@ -75,8 +76,9 @@ if __name__ == "__main__":
     df = MUTATIONS.GENE_MUTATION.value_counts()>options.n_other
     df = pandas.DataFrame(df[df])
     df.reset_index(inplace=True)
-    HIGH_COUNTS = df[['index']]
-    HIGH_COUNTS.rename(columns={'index': 'GENE_MUTATION'}, inplace=True)
+    # HIGH_COUNTS = df[['index']]
+    # HIGH_COUNTS.rename(columns={'index': 'GENE_MUTATION'}, inplace=True)
+    HIGH_COUNTS = df[['GENE_MUTATION']]
     HIGH_COUNTS.set_index('GENE_MUTATION', inplace=True)
     OTHER_MUTATIONS.set_index('GENE_MUTATION', inplace=True)
     OTHER_MUTATIONS = OTHER_MUTATIONS.join(HIGH_COUNTS, how='inner')
