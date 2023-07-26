@@ -13,7 +13,7 @@ We have around 70,000 sequenced *M. tuberculosis* genomes on hand, which can be 
 
 ### Recreate figures
 
-This repository is the basis for the paper *"Compensatory Mutations are associated with increased in vitro Growth Levels in resistant Clinical Samples of Mycobacterium tuberculosis"* Clicking "launch binder" above the readme will take you to a binder that you can use to run the jupyter notebook `Recreate_figures_paper.ipynb`. This notebook allows to reproduce most of the figures as seen in the paper. A few exceptions are figures based on PyMOL mappings, which were produced outside of the notebook environment.
+This repository is the basis for the paper *"Compensatory Mutations are associated with increased in vitro Growth Levels in resistant Clinical Samples of Mycobacterium tuberculosis"* Clicking "launch binder" above the readme will take you to a binder that you can use to run the jupyter notebook `Recreate_figures_paper.ipynb`. This notebook allows to reproduce most of the figures as seen in the paper. A few exceptions are figures based on PyMOL mappings, which were produced outside of the notebook environment. Note that starting the binder environment can take some time due to the amount of resources contained in the data folder.
 
 ### Run statistical association tests
 
