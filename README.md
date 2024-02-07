@@ -14,7 +14,10 @@ We have around 70,000 sequenced *M. tuberculosis* genomes on hand, which can be 
 
 ### Recreate figures
 
-This repository is the basis for the paper *"Compensatory Mutations are associated with increased in vitro Growth Levels in resistant Clinical Samples of Mycobacterium tuberculosis"* Clicking "launch binder" above the readme will take you to a binder that you can use to run the jupyter notebook `Recreate_figures_paper.ipynb`. This notebook allows to reproduce most of the figures as seen in the paper. A few exceptions are figures based on PyMOL mappings, which were produced outside of the notebook environment. Note that starting the binder environment can take some time due to the amount of resources contained in the data folder.
+This repository is the basis for the paper *"Compensatory Mutations are associated with increased in vitro Growth Levels in resistant Clinical Samples of Mycobacterium tuberculosis"* Clicking "launch binder" above the readme will take you to a binder that you can use to run the jupyter notebook `Recreate_figures_paper.ipynb`. This notebook allows to reproduce most of the figures as seen in the paper. A few exceptions are figures based on PyMOL mappings, which were produced outside of the notebook environment. 
+Important notes:
+- starting the binder environment can take some time due to the amount of resources contained in the data folder
+- the medians and confidence intervals of the boxplots are slightly different from the ones shown in the paper figures, since 'seaborn' stopped support of the 'usermedians' command. The medians are hence not bootstrapped but calculated using seaborns inbuilt function for boxplot medians.
 
 ### Run statistical association tests
 
