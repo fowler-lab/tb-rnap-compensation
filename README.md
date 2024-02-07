@@ -18,7 +18,7 @@ This repository is the basis for the paper *"Compensatory Mutations are associat
 
 Important notes:
 - starting the binder environment can take some time due to the amount of resources contained in the data folder
-- the medians and confidence intervals of the boxplots are slightly different from the ones shown in the paper figures, since 'seaborn' stopped support of the 'usermedians' command. The medians are hence not bootstrapped but calculated using seaborns inbuilt function for boxplot medians.
+- the medians and confidence intervals of the boxplots are slightly different from the ones shown in the paper figures, since `seaborn` stopped support of the `usermedians` command. The medians are hence not bootstrapped but calculated using seaborns inbuilt function for boxplot medians.
 
 ### Run statistical association tests
 
