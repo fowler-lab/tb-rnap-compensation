@@ -1,7 +1,9 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fowler-lab/tb-rnap-compensation.git/HEAD)
 # tb-rnap-compensation
 Brunner V, Fowler PW
+
 Compensatory mutations are associated with increased in vitro growth in resistant clinical samples of *Mycobacterium tuberculosis*.
+
 mGen 10:001187 https://doi.org/10.1099/mgen.0.001187
 
 ## Idea
