@@ -1,4 +1,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fowler-lab/tb-rnap-compensation.git/HEAD)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](
+https://colab.research.google.com/github/fowler-lab/tb-rnap-compensation/blob/main/Recreate_figures_paper.ipynb
+)
 # tb-rnap-compensation
 Brunner V, Fowler PW
 
